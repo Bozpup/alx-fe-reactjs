@@ -13,6 +13,7 @@ function App() {
       <WelcomeMessage />
       <Header />
       <MainContent />
+
       <Footer />
       <UserContext.Provider value={userData}>
         <ProfilePage />
