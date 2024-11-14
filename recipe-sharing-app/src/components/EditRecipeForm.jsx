@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import useStore from "./recipeStore"; // Import your Zustand store
+import useRecipeStore from "./recipeStore"; // Import your Zustand store
 
 const EditRecipeForm = () => {
   const { id } = useParams(); // Get the recipe ID from the URL
   const navigate = useNavigate(); // To navigate after successful update
 
   // Get recipes from the Zustand store
-  const recipes = useStore((state) => state.recipes);
-  const updateRecipe = useStore((state) => state.updateRecipe); // Access updateRecipe action
+  const recipes = useRecipeStore((state) => state.recipes);
+  const updateRecipe = useRecipeStore((state) => state.updateRecipe); // Access updateRecipe action
 
   // Find the recipe to edit based on the ID
   const recipeToEdit = recipes.find((recipe) => recipe.id === parseInt(id));
