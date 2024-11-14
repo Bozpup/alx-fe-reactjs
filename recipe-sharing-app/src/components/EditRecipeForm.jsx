@@ -1,54 +1,87 @@
-import React, { useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
-import useRecipeStore from "./recipeStore";
+import React, { useState, useEffect } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import useStore from "./recipeStore"; // Import your Zustand store
 
 const EditRecipeForm = () => {
-  const { id } = useParams();
-  const recipe = useRecipeStore((state) =>
-    state.recipes.find((recipe) => recipe.id === parseInt(id))
-  );
-  const updateRecipe = useRecipeStore((state) => state.updateRecipe);
-  const navigate = useNavigate();
+  const { id } = useParams(); // Get the recipe ID from the URL
+  const navigate = useNavigate(); // To navigate after successful update
 
-  const [name, setName] = useState(recipe?.name || "");
-  const [ingredients, setIngredients] = useState(
-    recipe?.ingredients.join(", ") || ""
-  );
-  const [instructions, setInstructions] = useState(recipe?.instructions || "");
+  // Get recipes from the Zustand store
+  const recipes = useStore((state) => state.recipes);
+  const updateRecipe = useStore((state) => state.updateRecipe); // Access updateRecipe action
+
+  // Find the recipe to edit based on the ID
+  const recipeToEdit = recipes.find((recipe) => recipe.id === parseInt(id));
+
+  // State to hold updated recipe values
+  const [name, setName] = useState("");
+  const [ingredients, setIngredients] = useState("");
+  const [instructions, setInstructions] = useState("");
+
+  useEffect(() => {
+    if (recipeToEdit) {
+      setName(recipeToEdit.name);
+      setIngredients(recipeToEdit.ingredients);
+      setInstructions(recipeToEdit.instructions);
+    }
+  }, [recipeToEdit]);
 
   const handleSubmit = (e) => {
-    e.preventDefault();
-    updateRecipe(id, {
-      name,
-      ingredients: ingredients.split(",").map((item) => item.trim()),
-      instructions,
-    });
-    navigate(`/recipes/${id}`);
+    e.preventDefault(); // Prevent default form submission
+
+    if (recipeToEdit) {
+      const updatedRecipe = {
+        id: recipeToEdit.id,
+        name,
+        ingredients,
+        instructions,
+      };
+
+      // Call the updateRecipe action from Zustand store
+      updateRecipe(recipeToEdit.id, updatedRecipe);
+
+      // Redirect to the updated recipe's details page
+      navigate(`/recipe/${recipeToEdit.id}`);
+    }
   };
 
-  if (!recipe) {
-    return <p>Recipe not found.</p>;
+  if (!recipeToEdit) {
+    return <div>Recipe not found!</div>;
   }
 
   return (
     <form onSubmit={handleSubmit}>
-      <input
-        type="text"
-        value={name}
-        onChange={(e) => setName(e.target.value)}
-        placeholder="Recipe Name"
-      />
-      <textarea
-        value={ingredients}
-        onChange={(e) => setIngredients(e.target.value)}
-        placeholder="Ingredients (comma separated)"
-      />
-      <textarea
-        value={instructions}
-        onChange={(e) => setInstructions(e.target.value)}
-        placeholder="Instructions"
-      />
-      <button type="submit">Save Changes</button>
+      <h2>Edit Recipe</h2>
+
+      <label>
+        Name:
+        <input
+          type="text"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          required
+        />
+      </label>
+
+      <label>
+        Ingredients:
+        <textarea
+          value={ingredients}
+          onChange={(e) => setIngredients(e.target.value)}
+          required
+        />
+      </label>
+
+      <label>
+        Instructions:
+        <textarea
+          value={instructions}
+          onChange={(e) => setInstructions(e.target.value)}
+          required
+        />
+      </label>
+
+      <button type="submit">Update Recipe</button>
     </form>
   );
 };
