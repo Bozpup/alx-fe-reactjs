@@ -6,8 +6,9 @@ import RecipeDetails from "./components/RecipeDetails";
 import EditRecipeForm from "./components/EditRecipeForm";
 import SearchBar from "./components/SearchBar";
 import AddFavoriteButton from "./components/AddFavotiteButton";
-import FavoriteList from "./components/FavoriteList";
+import FavoritesList from "./components/FavoritesList";
 import RemoveFavoriteButton from "./components/RemoveFavoriteButton";
+import RecommendationsList from "./components/RecommendationList";
 function App() {
   return (
     <>
@@ -15,7 +16,10 @@ function App() {
       <AddRecipeForm />
       <AddFavoriteButton recipeId={1} />
       <RemoveFavoriteButton recipeId={1} />
-      <FavoriteList />
+
+      <FavoritesList />
+
+      <RecommendationsList />
       <Routes>
         <Route path="/recipes" element={<RecipeList />} />
         <Route path="/recipes/:id" element={<RecipeDetails />} />
