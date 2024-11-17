@@ -11,7 +11,7 @@ function Navbar() {
         justifyContent: "space-around", // Distribute links evenly
         alignItems: "center", // Center items vertically
       }}
-    >
+  >
       <Link to="/" style={{ margin: "0 10px" }}>
         Home
       </Link>
