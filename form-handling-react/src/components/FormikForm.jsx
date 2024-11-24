@@ -1,4 +1,4 @@
-// import React, { useState } from "react";
+import React, { useState } from "react";
 import * as Yup from "yup";
 
 const validationSchema = Yup.object({
@@ -10,7 +10,7 @@ const validationSchema = Yup.object({
     .required("Password is required!"),
 });
 
-const FRegistrationForm = () => {
+const FormikForm = () => {
   const [formValues, setFormValues] = useState({
     username: "",
     email: "",
@@ -79,4 +79,4 @@ const FRegistrationForm = () => {
   );
 };
 
-export default FRegistrationForm;
+export default FormikForm;

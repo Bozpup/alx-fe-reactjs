@@ -1,76 +1,29 @@
 import React, { useState } from "react";
 
-const RegistrationForm = () => {
-  const [formValues, setFormValues] = useState({
-    username: "",
+function RegistrationForm() {
+  const [formData, setFormData] = useState({
+    name: "",
     email: "",
     password: "",
   });
 
-  const [errors, setErrors] = useState({});
-
-  const handleChange = (e) => {
+  const handleForm = (e) => {
     const { name, value } = e.target;
-    setFormValues({
-      ...formValues,
-      [name]: value,
-    });
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    // Basic validation
-    const newErrors = {};
-    if (!formValues.username) newErrors.username = "Username is required";
-    if (!formValues.email) newErrors.email = "Email is required";
-    if (!formValues.password) newErrors.password = "Password is required";
-
-    if (Object.keys(newErrors).length > 0) {
-      setErrors(newErrors);
-    } else {
-      console.log("Form Submitted Successfully:", formValues);
-      setErrors({});
-    }
+    alert(`Welcome ${formData.name}`);
   };
-
+  console.log();
   return (
-    <form onSubmit={handleSubmit}>
-      <div>
-        <label htmlFor="username">Username</label>
-        <input
-          id="username"
-          name="username"
-          value={formValues.username} // Controlled value
-          onChange={handleChange}
-        />
-        {errors.username && <div>{errors.username}</div>}
-      </div>
-      <div>
-        <label htmlFor="email">Email</label>
-        <input
-          id="email"
-          name="email"
-          type="email"
-          value={formValues.email} // Controlled value
-          onChange={handleChange}
-        />
-        {errors.email && <div>{errors.email}</div>}
-      </div>
-      <div>
-        <label htmlFor="password">Password</label>
-        <input
-          id="password"
-          name="password"
-          type="password"
-          value={formValues.password} // Controlled value
-          onChange={handleChange}
-        />
-        {errors.password && <div>{errors.password}</div>}
-      </div>
-      <button type="submit">Register</button>
-    </form>
+    <div>
+      <input name="name" value={formData.name} onChange={handleForm} />
+      <input name="email" value={formData.email} onChange={handleForm} />
+      <input name="password" value={formData.password} onChange={handleForm} />
+      <button onClick={handleSubmit}>Submit</button>
+    </div>
   );
-};
-
+}
 export default RegistrationForm;
