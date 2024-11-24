@@ -11,12 +11,16 @@ const RegistrationForm = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormValues({ ...formValues, [name]: value });
+    setFormValues({
+      ...formValues,
+      [name]: value,
+    });
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
+    // Basic validation
     const newErrors = {};
     if (!formValues.username) newErrors.username = "Username is required";
     if (!formValues.email) newErrors.email = "Email is required";
@@ -37,7 +41,7 @@ const RegistrationForm = () => {
         <input
           id="username"
           name="username"
-          value={formValues.username}
+          value={formValues.username} // Controlled value
           onChange={handleChange}
         />
         {errors.username && <div>{errors.username}</div>}
@@ -48,7 +52,7 @@ const RegistrationForm = () => {
           id="email"
           name="email"
           type="email"
-          value={formValues.email}
+          value={formValues.email} // Controlled value
           onChange={handleChange}
         />
         {errors.email && <div>{errors.email}</div>}
@@ -59,7 +63,7 @@ const RegistrationForm = () => {
           id="password"
           name="password"
           type="password"
-          value={formValues.password}
+          value={formValues.password} // Controlled value
           onChange={handleChange}
         />
         {errors.password && <div>{errors.password}</div>}
