@@ -1,31 +1,38 @@
+// src/components/PostsComponent.jsx
 import React from "react";
 import { useQuery } from "react-query";
 
-// Function to fetch posts
+// Fetch posts from the API
 const fetchPosts = async () => {
   const response = await fetch("https://jsonplaceholder.typicode.com/posts");
   if (!response.ok) {
-    throw new Error("Network response was not ok");
+    throw new Error("Failed to fetch posts");
   }
   return response.json();
 };
 
-function PostsComponent() {
+const PostsComponent = () => {
+  // Use React Query with specified options
   const { data, error, isLoading, isError, refetch } = useQuery(
     "posts",
     fetchPosts,
     {
-      cacheTime: 10000, // Cache for 10 seconds
-      staleTime: 5000, // Data considered fresh for 5 seconds
+      refetchOnWindowFocus: false, // Prevent automatic refetch when window regains focus
+      keepPreviousData: true, // Retain old data while fetching new
     }
   );
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading) {
+    return <div>Loading posts...</div>;
+  }
 
-  if (isError) return <div>Error: {error.message}</div>;
+  if (isError) {
+    return <div>Error fetching posts: {error.message}</div>;
+  }
 
   return (
     <div>
+      <h2>Posts</h2>
       <button onClick={refetch}>Refetch Posts</button>
       <ul>
         {data.map((post) => (
@@ -37,6 +44,6 @@ function PostsComponent() {
       </ul>
     </div>
   );
-}
+};
 
 export default PostsComponent;
