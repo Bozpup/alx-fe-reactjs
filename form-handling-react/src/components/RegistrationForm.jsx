@@ -1,14 +1,12 @@
 import React, { useState } from "react";
 
 function RegistrationForm() {
-  // Initialize state for form fields
-  const [formData, setFormData] = useState({
-    username: "",
-    email: "",
-    password: "",
-  });
+  // Separate useState for each input field
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
-  // Initialize state for error messages
+  // Error states for each input field
   const [errors, setErrors] = useState({
     username: "",
     email: "",
@@ -18,18 +16,17 @@ function RegistrationForm() {
   // Handle input field changes
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setFormData((prevState) => ({
-      ...prevState,
-      [name]: value,
-    }));
+    if (name === "username") setUsername(value);
+    if (name === "email") setEmail(value);
+    if (name === "password") setPassword(value);
   };
 
-  // Validate form before submission
+  // Basic form validation
   const validateForm = () => {
     const newErrors = {};
-    if (!formData.username) newErrors.username = "Username is required";
-    if (!formData.email) newErrors.email = "Email is required";
-    if (!formData.password) newErrors.password = "Password is required";
+    if (!username) newErrors.username = "Username is required";
+    if (!email) newErrors.email = "Email is required";
+    if (!password) newErrors.password = "Password is required";
     return newErrors;
   };
 
@@ -41,7 +38,7 @@ function RegistrationForm() {
     if (Object.keys(validationErrors).length > 0) {
       setErrors(validationErrors); // Set errors if validation fails
     } else {
-      alert(`Registration Successful: \nUsername: ${formData.username}`);
+      alert(`Registration Successful: \nUsername: ${username}`);
       setErrors({}); // Clear errors on successful submission
     }
   };
@@ -55,7 +52,7 @@ function RegistrationForm() {
             id="username"
             name="username"
             type="text"
-            value={formData.username} // Controlled component
+            value={username} // Controlled component
             onChange={handleInputChange}
           />
           {errors.username && (
@@ -69,7 +66,7 @@ function RegistrationForm() {
             id="email"
             name="email"
             type="email"
-            value={formData.email} // Controlled component
+            value={email} // Controlled component
             onChange={handleInputChange}
           />
           {errors.email && <div style={{ color: "red" }}>{errors.email}</div>}
@@ -81,7 +78,7 @@ function RegistrationForm() {
             id="password"
             name="password"
             type="password"
-            value={formData.password} // Controlled component
+            value={password} // Controlled component
             onChange={handleInputChange}
           />
           {errors.password && (
