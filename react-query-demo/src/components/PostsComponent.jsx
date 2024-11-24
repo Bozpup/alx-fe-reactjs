@@ -12,13 +12,15 @@ const fetchPosts = async () => {
 };
 
 const PostsComponent = () => {
-  // Use React Query with specified options
+  // Use React Query with additional options
   const { data, error, isLoading, isError, refetch } = useQuery(
     "posts",
     fetchPosts,
     {
-      refetchOnWindowFocus: false, // Prevent automatic refetch when window regains focus
-      keepPreviousData: true, // Retain old data while fetching new
+      refetchOnWindowFocus: false, // Prevent automatic refetch on window focus
+      keepPreviousData: true, // Keep previous data while fetching new data
+      cacheTime: 1000 * 60 * 5, // Cache data for 5 minutes
+      staleTime: 1000 * 60 * 1, // Data remains fresh for 1 minute
     }
   );
 
