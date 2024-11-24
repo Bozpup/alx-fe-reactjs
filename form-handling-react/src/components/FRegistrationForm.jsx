@@ -1,6 +1,16 @@
-import React, { useState } from "react";
+// import React, { useState } from "react";
+import * as Yup from "yup";
 
-const RegistrationForm = () => {
+const validationSchema = Yup.object({
+  username: Yup.string().required("Username is required!"),
+  email: Yup.string().email("Email is invalid").required("Email is required!"),
+  password: Yup.string()
+    .min(8, "Password should be at least 8 characters long")
+    .max(20, "Password should not exceed 20 characters")
+    .required("Password is required!"),
+});
+
+const FRegistrationForm = () => {
   const [formValues, setFormValues] = useState({
     username: "",
     email: "",
@@ -14,19 +24,19 @@ const RegistrationForm = () => {
     setFormValues({ ...formValues, [name]: value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const newErrors = {};
-    if (!formValues.username) newErrors.username = "Username is required";
-    if (!formValues.email) newErrors.email = "Email is required";
-    if (!formValues.password) newErrors.password = "Password is required";
-
-    if (Object.keys(newErrors).length > 0) {
-      setErrors(newErrors);
-    } else {
+    try {
+      await validationSchema.validate(formValues, { abortEarly: false });
       console.log("Form Submitted Successfully:", formValues);
       setErrors({});
+    } catch (validationErrors) {
+      const errorMessages = validationErrors.inner.reduce((acc, error) => {
+        acc[error.path] = error.message;
+        return acc;
+      }, {});
+      setErrors(errorMessages);
     }
   };
 
@@ -64,9 +74,9 @@ const RegistrationForm = () => {
         />
         {errors.password && <div>{errors.password}</div>}
       </div>
-      <button type="submit">Register</button>
+      <button type="submit">Submit</button>
     </form>
   );
 };
 
-export default RegistrationForm;
+export default FRegistrationForm;
