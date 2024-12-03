@@ -8,7 +8,7 @@ const HomePage = () => {
   useEffect(() => {
     const fetchRecipes = async () => {
       try {
-        const response = await fetch("/data.json");
+        const response = await fetch("data.json");
 
         console.log("Response", response);
         const data = await response.json();
