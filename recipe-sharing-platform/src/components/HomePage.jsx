@@ -24,9 +24,12 @@ const HomePage = () => {
   }, []);
   return (
     <div className="min-h-screen bg-blue-200 lg::p-20 m-30 rounded-lg shadow-lg">
-      <h5 className="hover:scale-110 transition-transform duration-300 ease-in text-purple-900 font-bold text-4xl">
+      <h5 className="hover:scale-110 transition-transform duration-300 ease-in text-purple-900 p-4 font-bold text-4xl">
         Recipes
       </h5>
+      <Link className=" underline font-3xl" to="/add-recipe">
+        Add a New Recipe
+      </Link>
       {recipes.length > 0 ? (
         recipes.map((recipe) => (
           <div
