@@ -1,6 +1,7 @@
 import React from "react";
 import { useEffect } from "react";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 const HomePage = () => {
   const [recipes, setRecipes] = useState([]);
@@ -8,7 +9,7 @@ const HomePage = () => {
   useEffect(() => {
     const fetchRecipes = async () => {
       try {
-        const response = await fetch("data.json");
+        const response = await fetch("/data.json");
 
         console.log("Response", response);
         const data = await response.json();
@@ -22,7 +23,7 @@ const HomePage = () => {
     fetchRecipes();
   }, []);
   return (
-    <div className="min-h-screen bg-blue-200 p-20 m-30 rounded-lg shadow-lg">
+    <div className="min-h-screen bg-blue-200 lg::p-20 m-30 rounded-lg shadow-lg">
       <h5 className="hover:scale-110 transition-transform duration-300 ease-in text-purple-900 font-bold text-4xl">
         Recipes
       </h5>
@@ -38,8 +39,12 @@ const HomePage = () => {
             ></img>
             <p className=" md:p-14  "> {recipe.title}</p>
             <p className="md: p-12"> {recipe.summary}</p>
-
-            <p></p>
+            <Link
+              to={`/recipe/${recipe.id}`}
+              className="md:p-16 text-blue-100 hover:underline mt-4 block text-center"
+            >
+              View Recipe
+            </Link>
           </div>
         ))
       ) : (
