@@ -52,8 +52,7 @@ const Search = () => {
           {isLoading ? "Loading" : "Search"}
         </button>
         {error && <p> {error}</p>}
-        {/* 
-      
+
         {userData && (
           <div className="user-info">
             <img src={userData.avatar_url} alt={userData.login} />
@@ -62,7 +61,7 @@ const Search = () => {
               View Profile
             </a>
           </div>
-        )} */}
+        )}
         {userData && (
           <div className="user-list">
             {userData.map((user) => (
