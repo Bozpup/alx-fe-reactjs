@@ -1,15 +1,15 @@
 export const fetchUserData = async (username, location, minRepos) => {
-  let q = `q=${username}`; // Base q
+  let query = `q=${username}`; // Base query
 
   if (location) {
-    q += `+location:${location}`;
+    query += `+location:${location}`;
   }
 
   if (minRepos) {
-    q += `+repo:${minRepos}`;
+    query += `+repo:${minRepos}`;
   }
 
-  const url = `https://api.github.com/search/users?${q}`; // Construct URL
+  const url = `https://api.github.com/search/users?${query}`; // Construct URL
 
   try {
     const response = await axios.get(url);
