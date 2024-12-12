@@ -33,13 +33,13 @@ const Search = () => {
           Search github users
         </label>
         <input
-          class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
           type="text"
           value={username}
           onChange={handleChange}
         />
         <input
-          class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
           type="text"
           placeholder="Location" /* Add new field */
         />
@@ -53,7 +53,7 @@ const Search = () => {
         </button>
         {error && <p> {error}</p>}
 
-        {userData && (
+        {/* {userData && (
           <div className="user-info">
             <img src={userData.avatar_url} alt={userData.login} />
             <h2>{userData.login}</h2>
@@ -61,7 +61,7 @@ const Search = () => {
               View Profile
             </a>
           </div>
-        )}
+        )} */}
         {userData && (
           <div className="user-list">
             {userData.map((user) => (
