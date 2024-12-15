@@ -33,7 +33,7 @@ const Search = () => {
       });
       setUserData(response);
     } catch (error) {
-      setError("Looks like we can't find the user. Please try again.");
+      setError("Looks like we can't find the user. ");
     } finally {
       setIsLoading(false);
     }
