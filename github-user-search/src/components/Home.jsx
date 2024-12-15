@@ -1,6 +1,7 @@
 // src/components/Home.jsx
 import React, { useState, useEffect } from "react";
-import { getGitHubUserData } from "../services/githubApi";
+//import { getGitHubUserData } from "../services/githubApi";
+import { getGitHubUserData } from "/src/services/gitHubApi.jsx";
 
 const Home = () => {
   const [userData, setUserData] = useState(null);

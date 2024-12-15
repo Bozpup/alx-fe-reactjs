@@ -1,19 +1,29 @@
-// src/services/githubApi.js
+import axios from "axios";
 
-const GITHUB_API_URL = "https://api.github.com";
+const apiKey = import.meta.env.VITE_GITHUB_API_KEY;
 
-// Make sure you're using `REACT_APP_` in the environment variable name
-const API_KEY = process.env.REACT_APP_GITHUB_API_KEY;
+// Ensure the function is named `getGitHubUserData` if that's what you're trying to import.
+export const getGitHubUserData = async ({ username, location, minRepos }) => {
+  const query = [
+    `q=${username || ""}`,
+    location ? `location:${location}` : "",
+    minRepos ? `repos:>=${minRepos}` : "",
+  ]
+    .filter(Boolean)
+    .join("+");
 
-export const getGitHubUserData = async (username) => {
   try {
-    const response = await fetch(
-      `${GITHUB_API_URL}/users/${username}?access_token=${API_KEY}`
+    const response = await axios.get(
+      `https://api.github.com/search/users?${query}`,
+      {
+        headers: {
+          Authorization: `token ${apiKey}`,
+        },
+      }
     );
-    const data = await response.json();
-    return data;
+    return response.data.items || [];
   } catch (error) {
-    console.error("Error fetching GitHub data:", error);
+    console.error("Error fetching user data:", error);
     throw error;
   }
 };

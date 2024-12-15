@@ -1,7 +1,6 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
 
-Import your page components here (e.g., Home, About, etc.)
 import Home from "./components/Home";
 import About from "./components/About";
 import Contact from "./components/Contact";
@@ -14,7 +13,7 @@ const Layout = () => (
       <nav>
         <ul>
           <li>
-            {/* <Link to="/">Home</Link> */}
+            <Link to="/">Home</Link>
           </li>
           <li>
             <Link to="/about">About</Link>
